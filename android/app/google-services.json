@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970326125016",
+    "project_id": "wedplan360-c96ef",
+    "storage_bucket": "wedplan360-c96ef.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970326125016:android:7f328a8325b5f3b70c2aad",
+        "android_client_info": {
+          "package_name": "com.wedplan360.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzWexqrBTU3knktM5QiUxeDZcqikhEsQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

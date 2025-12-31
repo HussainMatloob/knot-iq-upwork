@@ -1,0 +1,29 @@
+class AppUrl {
+  static var baseUrl = 'http://51.20.212.163:8906/api/';
+  static var loginEndPoint = "${baseUrl}auth/login";
+  static var registerApiEndPoint = "${baseUrl}auth/register";
+  static var onBoardingApiEndPoint = "${baseUrl}profile/onboarding";
+  static var loginApiEndPoint = "${baseUrl}auth/login";
+  static var getYourDataApiEndPoint = "${baseUrl}auth/me";
+  static var getGuestEndPoint = "${baseUrl}guests/";
+  static var addGuestEndPoint = "${baseUrl}guests";
+  static var updateAndDeleteGuestEndPoint = "${baseUrl}guests/";
+  static var getGuestStatEndPoint = "${baseUrl}guests/stats";
+  static var addUpdateDeleteAndGetTaskEndPoint = "${baseUrl}tasks/";
+  static var addUpdateAndDeleteCategoryEndPoint = "${baseUrl}categories/";
+  static var addMediaEndPoint = "${baseUrl}media";
+  static var getCategoriesEndPoint = "${baseUrl}categories";
+  static var addMultipleMediaEndPoint = "${baseUrl}media/multiple";
+  static var getAddUpdateAndDeleteVendorEndPoint = "${baseUrl}vendors/";
+  static var getAddUpdateAndDeleteBudgetEndPoint = "${baseUrl}expenses/";
+  static var getBudgetEndPoint = "${baseUrl}budget/";
+  static var getdashboardDataPoint = "${baseUrl}dashboard/";
+  static var getOtpApiEndPoint = "${baseUrl}auth/forgot-password/send-otp";
+  static var verifyOtpApiEndPoint = "${baseUrl}auth/forgot-password/verify-otp";
+  static var resetPasswordApiEndpoint = "${baseUrl}auth/reset-password";
+  static var getNotificationsApiEndpoint = "${baseUrl}reminders";
+  static var getNotificationsSettingData = "${baseUrl}notifications/";
+  static var readAsnotificationApiendpoint = "${baseUrl}reminders/";
+  static var getUpcomingRemindersApiEndpoint = "${baseUrl}reminders/upcoming";
+  static var updateYourProfile = "${baseUrl}profile/";
+}

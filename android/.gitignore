@@ -1,0 +1,50 @@
+# ========================
+# Flutter / Dart
+# ========================
+.dart_tool/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+# ========================
+# Android
+# ========================
+gradle-wrapper.jar
+.gradle/
+android/app/build/
+android/build/
+captures/
+/gradlew
+/gradlew.bat
+local.properties
+GeneratedPluginRegistrant.java
+.cxx/
+
+# Keystore / secrets
+key.properties
+**/*.keystore
+**/*.jks
+
+# Build outputs
+*.apk
+*.aab
+
+
+# gradle-wrapper.jar
+# /.gradle
+# /captures/
+# /gradlew
+# /gradlew.bat
+# /local.properties
+# GeneratedPluginRegistrant.java
+# .cxx/
+
+# # Remember to never publicly share your keystore.
+# # See https://flutter.dev/to/reference-keystore
+# key.properties
+# **/*.keystore
+# **/*.jks
+
+# # Build outputs
+# *.apk
+# *.aab
