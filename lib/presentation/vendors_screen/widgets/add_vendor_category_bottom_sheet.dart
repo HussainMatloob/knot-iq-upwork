@@ -232,7 +232,7 @@ class _AddVendorCategoryBottomSheetState
                     prefixIcon: InkWell(
                       onTap: () {
                         showCustomBottomSheet(
-                          minChildSize: 0.2,
+                          minChildSize: 0.3,
                           context: context,
                           initialChildSize: 0.3,
                           maxChildSize: 0.4,

@@ -198,7 +198,7 @@
   "amountValidate":"Please enter amount",
   "expenseTitleValidate":"Please enter expense title",
   "paymentDate":"Payment date",
-  "installmentNoteHintText":"1st payment",
+   
   "addPaymentText":"Added Payment",
   "deletePaymentText":"Delete Payment",
                                
@@ -290,5 +290,12 @@
   "refreshText": "Refresh",
   "noProfileDataText":"No data available yet",                        
   "emptyProfileScreenText" : "Tap refresh to load the latest profile data",
-  "profileUpdateSuccess":"Profile update successfully"
+  "profileUpdateSuccess":"Profile update successfully",
+
+  "hintTextTitle":"Enter title",
+  "hintTextDescription":"Enter description",
+  "dateHint":"Select date",
+  "descriptionText":"Description",
+  "helloText":"Hello",
+  "currencySymbol":"$"
 }

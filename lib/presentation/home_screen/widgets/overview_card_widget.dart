@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:knot_iq/l10n/app_localizations.dart';
 import 'package:knot_iq/utils/colors.dart';
 import 'package:knot_iq/utils/constants.dart';
 
@@ -63,7 +64,7 @@ class OverviewCardWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                currentValue,
+                "${AppLocalizations.of(context)!.currencySymbol}${currentValue}",
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -71,7 +72,7 @@ class OverviewCardWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "/$totalValue",
+                "/${AppLocalizations.of(context)!.currencySymbol}${totalValue}",
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,

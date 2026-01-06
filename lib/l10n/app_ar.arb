@@ -190,7 +190,7 @@
   "expenseTitleValidate": "يرجى إدخال عنوان المصروف",
   "paidText": "مدفوع",
   "paymentDate": "تاريخ الدفع",
-  "installmentNoteHintText": "الدفعة الأولى",
+ 
   "addPaymentText": "تمت إضافة الدفعة",
   "deletePaymentText": "حذف الدفعة",
 
@@ -282,6 +282,11 @@
   "refreshText": "تحديث",
   "noProfileDataText": "لا توجد بيانات متاحة بعد",
   "emptyProfileScreenText": "اضغط على تحديث لتحميل أحدث بيانات الملف الشخصي",
-  "profileUpdateSuccess": "تم تحديث الملف الشخصي بنجاح"
-
+  "profileUpdateSuccess": "تم تحديث الملف الشخصي بنجاح",
+  "hintTextTitle": "أدخل العنوان",
+  "hintTextDescription": "أدخل الوصف",
+  "dateHint": "اختر التاريخ",
+  "descriptionText": "الوصف",
+  "helloText": "مرحبا",
+  "currencySymbol": "ر.س"
 }

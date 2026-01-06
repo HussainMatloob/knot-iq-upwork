@@ -190,7 +190,6 @@
   "expenseTitleValidate": "Veuillez saisir le titre de la dépense",
   "paidText": "Payé",
   "paymentDate": "Date de paiement",
-  "installmentNoteHintText": "1er paiement",
   "addPaymentText": "Paiement ajouté",
   "deletePaymentText": "Supprimer le paiement",
 
@@ -281,6 +280,11 @@
   "refreshText": "Rafraîchir",
   "noProfileDataText": "Aucune donnée disponible pour le moment",
   "emptyProfileScreenText": "Appuyez sur rafraîchir pour charger les dernières données du profil",
-  "profileUpdateSuccess": "Profil mis à jour avec succès"
-
+  "profileUpdateSuccess": "Profil mis à jour avec succès",
+  "hintTextTitle": "Entrez le titre",
+  "hintTextDescription": "Entrez la description",
+  "dateHint": "Sélectionner une date",
+  "descriptionText": "Description",
+  "helloText": "Bonjour",
+  "currencySymbol": "€"
 }

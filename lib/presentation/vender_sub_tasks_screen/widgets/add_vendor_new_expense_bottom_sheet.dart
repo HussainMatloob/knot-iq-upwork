@@ -53,8 +53,21 @@ class _AddNewExpenseBottomSheetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    /// CENTER - TITLE (Flexible + Ellipsis)
+                    Text(
+                      widget.cateGoryData.name ?? "",
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Appcolors.blackColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
                     /// LEFT - Cancel
                     InkWell(
                       onTap: () => Navigator.pop(context),
@@ -68,70 +81,6 @@ class _AddNewExpenseBottomSheetState
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                    ),
-
-                    /// CENTER - TITLE (Flexible + Ellipsis)
-                    Expanded(
-                      child: Text(
-                        widget.cateGoryData.name ?? "",
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Appcolors.blackColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    /// RIGHT - Save / Update / Loader
-                    InkWell(
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          if (widget.isUpdate) {
-                            vendorSubTaskController.updateVendorExpense(
-                              context,
-                              widget.cateGoryData,
-                              widget.vendorData!,
-                            );
-                          } else {
-                            vendorSubTaskController.addVendorExpense(
-                              context,
-                              widget.cateGoryData,
-                            );
-                          }
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:
-                            vendorSubTaskController.isExpenseAdd ||
-                                vendorSubTaskController.isVendorUpdate
-                            ? Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Center(
-                                  child: SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      color: Appcolors.primary2Color,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Text(
-                                widget.isUpdate
-                                    ? AppLocalizations.of(context)!.updateText
-                                    : AppLocalizations.of(context)!.saveText,
-                                style: const TextStyle(
-                                  color: Appcolors.primaryColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
                       ),
                     ),
                   ],
@@ -167,13 +116,11 @@ class _AddNewExpenseBottomSheetState
                 CustomTextFormField(
                   keyboardType: TextInputType.number,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\.?\d{0,100}$'),
-                    ),
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d+$')),
                   ],
                   validateFunction: (value) => vendorSubTaskController
                       .totalBudgetValidate(value, context),
-                  hint: "\$0.0",
+                  hint: "${AppLocalizations.of(context)!.currencySymbol}${0}",
                   controller: vendorSubTaskController.totalBudGetController,
                 ),
 
@@ -191,7 +138,7 @@ class _AddNewExpenseBottomSheetState
                       vendorSubTaskController
                           .clearOrInitializeInstallmentFields(false);
                       showCustomBottomSheet(
-                        minChildSize: 0.2,
+                        minChildSize: 0.8,
                         context: context,
                         initialChildSize: 0.8,
                         maxChildSize: 0.9,
@@ -285,7 +232,7 @@ class _AddNewExpenseBottomSheetState
                                             .vendorInstallments[index],
                                       );
                                   showCustomBottomSheet(
-                                    minChildSize: 0.2,
+                                    minChildSize: 0.8,
                                     context: context,
                                     initialChildSize: 0.8,
                                     maxChildSize: 0.9,
@@ -308,8 +255,7 @@ class _AddNewExpenseBottomSheetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
-                                            width: 245,
+                                          Flexible(
                                             child: Text(
                                               "${vendorSubTaskController.vendorInstallments[index]["note"]}",
                                               style: TextStyle(
@@ -320,10 +266,11 @@ class _AddNewExpenseBottomSheetState
                                             ),
                                           ),
 
-                                          Container(
-                                            width: 50,
+                                          SizedBox(width: 20),
+
+                                          Flexible(
                                             child: Text(
-                                              "\$${double.parse(vendorSubTaskController.vendorInstallments[index]["amount"].toString()).toStringAsFixed(2)}",
+                                              "${AppLocalizations.of(context)!.currencySymbol}${(vendorSubTaskController.vendorInstallments[index]["amount"] ?? 0)}",
                                               style: TextStyle(
                                                 color: Appcolors.darkGreyColor,
                                                 fontSize: bodyfontSize,
@@ -536,57 +483,120 @@ class _AddNewExpenseBottomSheetState
                           ),
                         ],
                       ),
-                SizedBox(height: widget.isUpdate ? 20 : 0),
-                widget.isUpdate
-                    ? vendorSubTaskController.isVendorDelete
-                          ? Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Appcolors.redColor,
+                SizedBox(height: 30),
+
+                vendorSubTaskController.isExpenseAdd ||
+                        vendorSubTaskController.isVendorUpdate ||
+                        vendorSubTaskController.isVendorDelete
+                    ? Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: vendorSubTaskController.isVendorDelete
+                                ? Appcolors.redColor
+                                : Appcolors.primary2Color,
+                          ),
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          widget.isUpdate
+                              ? Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      customDeleteDialog(
+                                        context,
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          vendorSubTaskController.deleteVendor(
+                                            context,
+                                            widget.cateGoryData,
+                                            widget.vendorData!,
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      padding: EdgeInsets.all(8),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Appcolors.redColor.withAlpha(20),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          AppLocalizations.of(
+                                            context,
+                                          )!.deleteText,
+                                          style: TextStyle(
+                                            color: Appcolors.redColor,
+                                            fontSize: headdingfontSize,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            )
-                          : GestureDetector(
+                                )
+                              : const SizedBox.shrink(),
+                          Visibility(
+                            visible: widget.isUpdate,
+                            child: SizedBox(width: 30),
+                          ),
+
+                          /// RIGHT - Save / Update / Loader
+                          Expanded(
+                            child: InkWell(
                               onTap: () {
-                                customDeleteDialog(
-                                  context,
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    vendorSubTaskController.deleteVendor(
+                                if (formKey.currentState!.validate()) {
+                                  if (widget.isUpdate) {
+                                    vendorSubTaskController.updateVendorExpense(
                                       context,
                                       widget.cateGoryData,
                                       widget.vendorData!,
                                     );
-                                  },
-                                );
+                                  } else {
+                                    vendorSubTaskController.addVendorExpense(
+                                      context,
+                                      widget.cateGoryData,
+                                    );
+                                  }
+                                }
                               },
                               child: Container(
-                                height: 50,
-                                padding: EdgeInsets.all(10),
+                                height: 40,
+                                padding: EdgeInsets.all(8),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Appcolors.redColor.withAlpha(20),
+                                  color: Appcolors.primary2Color,
                                 ),
                                 child: Center(
                                   child: Text(
-                                    AppLocalizations.of(context)!.deleteText,
-                                    style: TextStyle(
-                                      color: Appcolors.redColor,
-                                      fontSize: headdingfontSize,
-                                      fontWeight: FontWeight.w400,
+                                    widget.isUpdate
+                                        ? AppLocalizations.of(
+                                            context,
+                                          )!.updateText
+                                        : AppLocalizations.of(
+                                            context,
+                                          )!.saveText,
+                                    style: const TextStyle(
+                                      color: Appcolors.whiteColor,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
                               ),
-                            )
-                    : const SizedBox.shrink(),
-                const SizedBox(height: 60),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                const SizedBox(height: 30),
               ],
             ),
           ),

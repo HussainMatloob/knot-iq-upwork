@@ -510,9 +510,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get paymentDate => 'تاريخ الدفع';
 
   @override
-  String get installmentNoteHintText => 'الدفعة الأولى';
-
-  @override
   String get addPaymentText => 'تمت إضافة الدفعة';
 
   @override
@@ -745,4 +742,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profileUpdateSuccess => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String get hintTextTitle => 'أدخل العنوان';
+
+  @override
+  String get hintTextDescription => 'أدخل الوصف';
+
+  @override
+  String get dateHint => 'اختر التاريخ';
+
+  @override
+  String get descriptionText => 'الوصف';
+
+  @override
+  String get helloText => 'مرحبا';
+
+  @override
+  String get currencySymbol => 'ر.س';
 }

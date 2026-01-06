@@ -44,8 +44,23 @@ class _AddInstallmentBottomSheetState extends State<AddInstallmentBottomSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      /// CENTER - TITLE (Flexible + Ellipsis)
+                      Text(
+                        widget.isUpdate
+                            ? AppLocalizations.of(context)!.updateInstallment
+                            : AppLocalizations.of(context)!.addInstallment,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Appcolors.blackColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
                       /// LEFT - Cancel
                       InkWell(
                         onTap: () => Navigator.pop(context),
@@ -55,49 +70,6 @@ class _AddInstallmentBottomSheetState extends State<AddInstallmentBottomSheet> {
                             AppLocalizations.of(context)!.cancelText,
                             style: const TextStyle(
                               color: Appcolors.blackColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      /// CENTER - TITLE (Flexible + Ellipsis)
-                      Expanded(
-                        child: Text(
-                          widget.isUpdate
-                              ? AppLocalizations.of(context)!.updateInstallment
-                              : AppLocalizations.of(context)!.addInstallment,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Appcolors.blackColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-
-                      /// RIGHT - Save / Update / Loader
-                      InkWell(
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            expenseController.addOrUpdateBudgetInstallment(
-                              context,
-                              widget.isUpdate,
-                              index: widget.index,
-                            );
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            widget.isUpdate
-                                ? AppLocalizations.of(context)!.updateText
-                                : AppLocalizations.of(context)!.saveText,
-                            style: const TextStyle(
-                              color: Appcolors.primaryColor,
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),
@@ -120,13 +92,11 @@ class _AddInstallmentBottomSheetState extends State<AddInstallmentBottomSheet> {
                   CustomTextFormField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^\d+\.?\d{0,100}$'),
-                      ),
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d+$')),
                     ],
                     validateFunction: (value) =>
                         expenseController.amountValidate(value, context),
-                    hint: "\$0.0",
+                    hint: "${AppLocalizations.of(context)!.currencySymbol}${0}",
                     controller: expenseController.installmentAmountController,
                   ),
 
@@ -272,40 +242,88 @@ class _AddInstallmentBottomSheetState extends State<AddInstallmentBottomSheet> {
                   CustomTextFormField(
                     validateFunction: (value) =>
                         expenseController.noteValidate(value, context),
-                    hint: AppLocalizations.of(context)!.installmentNoteHintText,
+                    hint: AppLocalizations.of(context)!.noteHint,
                     controller: expenseController.installmentNoteController,
                   ),
 
-                  SizedBox(height: widget.isUpdate ? 20 : 0),
-                  widget.isUpdate
-                      ? GestureDetector(
+                  SizedBox(height: 30),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      widget.isUpdate
+                          ? Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  expenseController.removeInstallment(
+                                    widget.index!,
+                                    context,
+                                  );
+                                },
+                                child: Container(
+                                  height: 40,
+                                  padding: EdgeInsets.all(8),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Appcolors.redColor.withAlpha(20),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.deleteText,
+                                      style: TextStyle(
+                                        color: Appcolors.redColor,
+                                        fontSize: headdingfontSize,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      Visibility(
+                        visible: widget.isUpdate,
+                        child: SizedBox(width: 30),
+                      ),
+
+                      /// RIGHT - Save / Update / Loader
+                      Expanded(
+                        child: InkWell(
                           onTap: () {
-                            expenseController.removeInstallment(
-                              widget.index!,
-                              context,
-                            );
+                            if (formKey.currentState!.validate()) {
+                              expenseController.addOrUpdateBudgetInstallment(
+                                context,
+                                widget.isUpdate,
+                                index: widget.index,
+                              );
+                            }
                           },
                           child: Container(
-                            height: 50,
-                            padding: EdgeInsets.all(10),
+                            height: 40,
+                            padding: EdgeInsets.all(8),
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              color: Appcolors.redColor.withAlpha(20),
+                              color: Appcolors.primary2Color,
                             ),
                             child: Center(
                               child: Text(
-                                AppLocalizations.of(context)!.deleteText,
-                                style: TextStyle(
-                                  color: Appcolors.redColor,
-                                  fontSize: headdingfontSize,
-                                  fontWeight: FontWeight.w400,
+                                widget.isUpdate
+                                    ? AppLocalizations.of(context)!.updateText
+                                    : AppLocalizations.of(context)!.saveText,
+                                style: const TextStyle(
+                                  color: Appcolors.whiteColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
                           ),
-                        )
-                      : SizedBox(),
+                        ),
+                      ),
+                    ],
+                  ),
 
                   const SizedBox(height: 20),
                 ],

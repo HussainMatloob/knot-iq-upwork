@@ -1103,12 +1103,6 @@ abstract class AppLocalizations {
   /// **'Payment date'**
   String get paymentDate;
 
-  /// No description provided for @installmentNoteHintText.
-  ///
-  /// In en, this message translates to:
-  /// **'1st payment'**
-  String get installmentNoteHintText;
-
   /// No description provided for @addPaymentText.
   ///
   /// In en, this message translates to:
@@ -1576,6 +1570,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile update successfully'**
   String get profileUpdateSuccess;
+
+  /// No description provided for @hintTextTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter title'**
+  String get hintTextTitle;
+
+  /// No description provided for @hintTextDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter description'**
+  String get hintTextDescription;
+
+  /// No description provided for @dateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get dateHint;
+
+  /// No description provided for @descriptionText.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionText;
+
+  /// No description provided for @helloText.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello'**
+  String get helloText;
+
+  /// No description provided for @currencySymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'\$'**
+  String get currencySymbol;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

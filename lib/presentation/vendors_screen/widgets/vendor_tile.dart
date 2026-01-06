@@ -107,7 +107,7 @@ class VendorTile extends StatelessWidget {
                     SizedBox(
                       width: 150,
                       child: Text(
-                        "$subtitle: $total",
+                        "$subtitle: ${double.tryParse(total)?.round() ?? 0}",
                         style: TextStyle(
                           fontSize: 15,
                           color: Appcolors.darkGreyColor,
@@ -134,7 +134,7 @@ class VendorTile extends StatelessWidget {
                               color,
                             );
                             showCustomBottomSheet(
-                              minChildSize: 0.2,
+                              minChildSize: 0.45,
                               context: context,
                               initialChildSize: 0.45,
                               maxChildSize: 0.6,

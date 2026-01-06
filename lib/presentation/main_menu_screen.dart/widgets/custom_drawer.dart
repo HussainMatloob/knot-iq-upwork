@@ -127,8 +127,7 @@ class CustomDrawer extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              homeController.userData?.name ??
-                                                  "",
+                                              "${AppLocalizations.of(context)!.helloText} ${homeController.userData?.name ?? ""}",
                                               style: TextStyle(
                                                 fontSize: headdingfontSize,
                                                 fontWeight: FontWeight.w600,
@@ -138,22 +137,22 @@ class CustomDrawer extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 4),
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              homeController.userData?.email ??
-                                                  "",
-                                              style: TextStyle(
-                                                color: Appcolors.blackColor,
-                                                fontSize: bodyfontSize,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                      // const SizedBox(height: 4),
+                                      // Row(
+                                      //   children: [
+                                      //     Expanded(
+                                      //       child: Text(
+                                      //         homeController.userData?.email ??
+                                      //             "",
+                                      //         style: TextStyle(
+                                      //           color: Appcolors.blackColor,
+                                      //           fontSize: bodyfontSize,
+                                      //           fontWeight: FontWeight.w400,
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -236,7 +235,7 @@ class CustomDrawer extends StatelessWidget {
                   iconPath: AssetPath.familyIcon,
                   title: AppLocalizations.of(context)!.guests,
                   trailingText:
-                      '${(homeController.dashboardData?.guests.attending ?? 0).toStringAsFixed(1)}/${(homeController.dashboardData?.guests.total ?? 0).toStringAsFixed(1)}',
+                      '${((homeController.dashboardData?.guests.attending ?? 0).round())}/${(homeController.dashboardData?.guests.total ?? 0).round()}',
                   onTap: onGuestsTap,
                 );
               },

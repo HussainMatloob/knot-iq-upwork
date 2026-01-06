@@ -180,12 +180,11 @@ class _VenderSubTaskScreenState extends State<VenderSubTaskScreen> {
                                               .vendorExpenseData[index],
                                         );
                                     showCustomBottomSheet(
-                                      minChildSize: 0.2,
+                                      minChildSize: 0.9,
                                       context: context,
                                       initialChildSize:
-                                          0.95, // 95% of screen height
-                                      maxChildSize:
-                                          0.95, // 95% of screen height
+                                          0.9, // 95% of screen height
+                                      maxChildSize: 0.9, // 95% of screen height
                                       child: AddVendorNewExpenseBottomSheet(
                                         cateGoryData: widget.categoryData,
                                         vendorData: vendorSubTaskController
@@ -290,7 +289,7 @@ class _VenderSubTaskScreenState extends State<VenderSubTaskScreen> {
                                             ),
                                             SizedBox(width: 5),
                                             Text(
-                                              "\$${(vendorSubTaskController.vendorExpenseData[index].budget.total ?? 0).toStringAsFixed(1)} ${AppLocalizations.of(context)!.useText}",
+                                              "${AppLocalizations.of(context)!.currencySymbol}${(vendorSubTaskController.vendorExpenseData[index].budget.total ?? 0).round()} ${AppLocalizations.of(context)!.useText}",
                                               style: TextStyle(
                                                 color: Appcolors.blackColor,
                                                 fontSize: headdingfontSize,
@@ -305,7 +304,7 @@ class _VenderSubTaskScreenState extends State<VenderSubTaskScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "${AppLocalizations.of(context)!.budget} : \$${(vendorSubTaskController.vendorExpenseData[index].totalBudget ?? 0).toStringAsFixed(2)}",
+                                              "${AppLocalizations.of(context)!.budget} : ${AppLocalizations.of(context)!.currencySymbol}${(vendorSubTaskController.vendorExpenseData[index].totalBudget ?? 0).round()}",
                                               style: TextStyle(
                                                 color: Appcolors.blackColor,
                                                 fontSize: bodyfontSize,
@@ -315,7 +314,7 @@ class _VenderSubTaskScreenState extends State<VenderSubTaskScreen> {
                                             Expanded(
                                               flex: 2,
                                               child: Text(
-                                                "\$${(vendorSubTaskController.vendorExpenseData[index].budget.remaining ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.leftText}",
+                                                "${AppLocalizations.of(context)!.currencySymbol}${(vendorSubTaskController.vendorExpenseData[index].budget.remaining ?? 0).round()} ${AppLocalizations.of(context)!.leftText}",
                                                 maxLines: 1,
                                                 textAlign: TextAlign.center,
                                                 overflow: TextOverflow.ellipsis,
@@ -328,7 +327,7 @@ class _VenderSubTaskScreenState extends State<VenderSubTaskScreen> {
                                             ),
 
                                             Text(
-                                              "${vendorSubTaskController.vendorExpenseData[index].budget.percentage ?? 0}%",
+                                              "${(vendorSubTaskController.vendorExpenseData[index].budget.percentage ?? 0).round()}%",
                                               style: TextStyle(
                                                 color: Appcolors.blackColor,
                                                 fontSize: bodyfontSize,
@@ -406,10 +405,10 @@ class _VenderSubTaskScreenState extends State<VenderSubTaskScreen> {
               onPressed: () {
                 vendorSubTaskController.clearAllFields();
                 showCustomBottomSheet(
-                  minChildSize: 0.2,
+                  minChildSize: 0.9,
                   context: context,
-                  initialChildSize: 0.95, // 95% of screen height
-                  maxChildSize: 0.95, // 95% of screen height
+                  initialChildSize: 0.9, // 95% of screen height
+                  maxChildSize: 0.9, // 95% of screen height
                   child: AddVendorNewExpenseBottomSheet(
                     cateGoryData: widget.categoryData,
                   ),

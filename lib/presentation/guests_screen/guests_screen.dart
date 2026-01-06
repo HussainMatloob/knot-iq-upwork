@@ -153,16 +153,6 @@ class _GuestsScreenState extends State<GuestsScreen> {
                                           ),
                                         ),
                                       ),
-
-                                      // Text(
-                                      //   NotificationService.getNotificationsCount()
-                                      //       .toString(), //  notification count
-                                      //   style: TextStyle(
-                                      //     color: Colors.white,
-                                      //     fontSize: 11,
-                                      //     fontWeight: FontWeight.bold,
-                                      //   ),
-                                      // ),
                                     ),
                                   ),
                                 ),
@@ -191,18 +181,23 @@ class _GuestsScreenState extends State<GuestsScreen> {
                           children: [
                             GuestDetailsBox(
                               title: AppLocalizations.of(context)!.total,
-                              value: guestsController.totalGuests.toString(),
+                              value: (guestsController.totalGuests)
+                                  .round()
+                                  .toString(),
                             ),
                             SizedBox(width: 16),
                             GuestDetailsBox(
                               title: AppLocalizations.of(context)!.attending,
-                              value: guestsController.attentingGuests
+                              value: (guestsController.attentingGuests)
+                                  .round()
                                   .toString(),
                             ),
                             SizedBox(width: 16),
                             GuestDetailsBox(
                               title: AppLocalizations.of(context)!.pending,
-                              value: guestsController.pendingGuests.toString(),
+                              value: (guestsController.pendingGuests)
+                                  .round()
+                                  .toString(),
                             ),
                           ],
                         ),
@@ -318,10 +313,10 @@ class _GuestsScreenState extends State<GuestsScreen> {
                                               guest,
                                             );
                                             showCustomBottomSheet(
-                                              minChildSize: 0.2,
+                                              minChildSize: 0.8,
                                               context: context,
                                               initialChildSize:
-                                                  0.7, // 30% of screen height
+                                                  0.8, // 30% of screen height
                                               maxChildSize:
                                                   0.8, // 80% of screen height
                                               child: GuestBottomSheet(
@@ -370,9 +365,9 @@ class _GuestsScreenState extends State<GuestsScreen> {
                 onPressed: () {
                   guestsController.clearRecords();
                   showCustomBottomSheet(
-                    minChildSize: 0.2,
+                    minChildSize: 0.8,
                     context: context,
-                    initialChildSize: 0.7, // 30% of screen height
+                    initialChildSize: 0.8, // 30% of screen height
                     maxChildSize: 0.8, // 80% of screen height
                     child: GuestBottomSheet(),
                   );

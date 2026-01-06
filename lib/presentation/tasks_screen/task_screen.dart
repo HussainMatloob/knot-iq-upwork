@@ -208,7 +208,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                             .assignees,
                                       );
                                       showCustomBottomSheet(
-                                        minChildSize: 0.2,
+                                        minChildSize: 0.9,
                                         context: context,
                                         initialChildSize: 0.9,
                                         maxChildSize: 0.9,
@@ -402,7 +402,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   onPressed: () {
                     taskController.makeEditAble(false);
                     showCustomBottomSheet(
-                      minChildSize: 0.2,
+                      minChildSize: 0.9,
                       context: context,
                       initialChildSize: 0.9,
                       maxChildSize: 0.9,

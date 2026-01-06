@@ -51,6 +51,22 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  late FocusNode _focusNode;
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode();
+    _focusNode.addListener(() {
+      setState(() {}); // rebuild on focus change
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -58,6 +74,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       inputFormatters: widget.inputFormatters,
       maxLines: widget.multiLine ?? 1,
       onTap: widget.onTap,
+      focusNode: _focusNode,
       controller: widget.controller,
       validator: widget.validateFunction,
       obscureText: widget.isObSecure ?? false,
@@ -97,7 +114,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                         : Icon(Icons.remove_red_eye, color: widget.iconColor),
                   )
                 : null),
-        hintText: widget.hint,
+        hintText:
+            (!_focusNode.hasFocus && (widget.controller?.text.isEmpty ?? true))
+            ? widget.hint
+            : null,
+        //hintText: widget.hint,
         hintStyle: TextStyle(
           color: widget.hintTextColor,
           fontSize: headdingfontSize,

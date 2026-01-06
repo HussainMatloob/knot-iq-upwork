@@ -127,7 +127,7 @@ class _VendorsScreenState extends State<VendorsScreen> {
                                               .supplierName ??
                                           "",
                                       total:
-                                          "${(vendorController.cateGoryData[index].stats!.totalBudget).toStringAsFixed(1) ?? 0}",
+                                          "${(vendorController.cateGoryData[index].stats!.totalBudget).round() ?? 0}",
                                       color:
                                           vendorController
                                               .cateGoryData[index]
@@ -163,7 +163,7 @@ class _VendorsScreenState extends State<VendorsScreen> {
                     onPressed: () {
                       vendorController.clearData();
                       showCustomBottomSheet(
-                        minChildSize: 0.2,
+                        minChildSize: 0.45,
                         context: context,
                         initialChildSize: 0.45,
                         maxChildSize: 0.6,

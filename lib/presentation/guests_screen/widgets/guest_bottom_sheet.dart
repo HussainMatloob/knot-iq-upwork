@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:knot_iq/controllers/guests_controller.dart';
+import 'package:knot_iq/core/common_widgets/action_button.dart';
 import 'package:knot_iq/core/common_widgets/custom_delete_dialog.dart';
 import 'package:knot_iq/core/common_widgets/custom_text_form_field.dart';
 import 'package:knot_iq/core/common_widgets/switch_button.dart';
@@ -40,8 +41,23 @@ class _GuestBottomSheetState extends State<GuestBottomSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      /// CENTER - TITLE (Flexible + Ellipsis)
+                      Text(
+                        widget.isEditing
+                            ? AppLocalizations.of(context)!.updateGuest
+                            : AppLocalizations.of(context)!.addGuest,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Appcolors.blackColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
                       /// LEFT - Cancel
                       InkWell(
                         onTap: () => Navigator.pop(context),
@@ -55,65 +71,6 @@ class _GuestBottomSheetState extends State<GuestBottomSheet> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                      ),
-
-                      /// CENTER - TITLE (Flexible + Ellipsis)
-                      Expanded(
-                        child: Text(
-                          widget.isEditing
-                              ? AppLocalizations.of(context)!.updateGuest
-                              : AppLocalizations.of(context)!.addGuest,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Appcolors.blackColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-
-                      /// RIGHT - Save / Update / Loader
-                      InkWell(
-                        onTap:
-                            guestsController.isGuestAdd ||
-                                guestsController.isGuestUpdate
-                            ? null
-                            : () {
-                                if (formKey.currentState!.validate()) {
-                                  widget.isEditing
-                                      ? guestsController.updateGuest(
-                                          context,
-                                          widget.guestData!,
-                                        )
-                                      : guestsController.addGuest(context);
-                                }
-                              },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child:
-                              guestsController.isGuestAdd ||
-                                  guestsController.isGuestUpdate
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Appcolors.primary2Color,
-                                  ),
-                                )
-                              : Text(
-                                  widget.isEditing
-                                      ? AppLocalizations.of(context)!.updateText
-                                      : AppLocalizations.of(context)!.saveText,
-                                  style: const TextStyle(
-                                    color: Appcolors.primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
                         ),
                       ),
                     ],
@@ -317,51 +274,121 @@ class _GuestBottomSheetState extends State<GuestBottomSheet> {
                   ),
 
                   const SizedBox(height: 20),
-                  widget.isEditing
-                      ? guestsController.isGuestDelete
-                            ? Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Appcolors.redColor,
-                                  ),
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: () {
-                                  customDeleteDialog(
-                                    context,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      guestsController.deleteGuest(
-                                        context,
-                                        widget.guestData!,
-                                      );
-                                    },
-                                  );
-                                },
+
+                  guestsController.isGuestAdd ||
+                          guestsController.isGuestUpdate ||
+                          guestsController.isGuestDelete
+                      ? Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: guestsController.isGuestDelete
+                                  ? Appcolors.redColor
+                                  : Appcolors.primary2Color,
+                            ),
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            widget.isEditing
+                                ? Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        customDeleteDialog(
+                                          context,
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            guestsController.deleteGuest(
+                                              context,
+                                              widget.guestData!,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        padding: EdgeInsets.all(8),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          color: Appcolors.redColor.withAlpha(
+                                            20,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.deleteText,
+                                            style: TextStyle(
+                                              color: Appcolors.redColor,
+                                              fontSize: headdingfontSize,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            Visibility(
+                              visible: widget.isEditing,
+                              child: SizedBox(width: 30),
+                            ),
+
+                            /// RIGHT - Save / Update / Loader
+                            Expanded(
+                              child: InkWell(
+                                onTap:
+                                    guestsController.isGuestAdd ||
+                                        guestsController.isGuestUpdate
+                                    ? null
+                                    : () {
+                                        if (formKey.currentState!.validate()) {
+                                          widget.isEditing
+                                              ? guestsController.updateGuest(
+                                                  context,
+                                                  widget.guestData!,
+                                                )
+                                              : guestsController.addGuest(
+                                                  context,
+                                                );
+                                        }
+                                      },
                                 child: Container(
-                                  height: 50,
-                                  padding: EdgeInsets.all(10),
+                                  height: 40,
+                                  padding: EdgeInsets.all(8),
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Appcolors.redColor.withAlpha(20),
+                                    color: Appcolors.primary2Color,
                                   ),
                                   child: Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.deleteText,
-                                      style: TextStyle(
-                                        color: Appcolors.redColor,
-                                        fontSize: headdingfontSize,
-                                        fontWeight: FontWeight.w400,
+                                      widget.isEditing
+                                          ? AppLocalizations.of(
+                                              context,
+                                            )!.updateText
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.saveText,
+                                      style: const TextStyle(
+                                        color: Appcolors.whiteColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
                                 ),
-                              )
-                      : const SizedBox.shrink(),
+                              ),
+                            ),
+                          ],
+                        ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),

@@ -77,19 +77,19 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                         ExpenseDetailBox(
                           title: AppLocalizations.of(context)!.plannedText,
                           value:
-                              "\$${(expenseController.budgetData?.summary.planned ?? 0.0).toStringAsFixed(1)}",
+                              "${AppLocalizations.of(context)!.currencySymbol}${(expenseController.budgetData?.summary.planned ?? 0).round()}",
                         ),
                         SizedBox(width: 16),
                         ExpenseDetailBox(
                           title: AppLocalizations.of(context)!.spentText,
                           value:
-                              "\$${(expenseController.budgetData?.summary.spent ?? 0.0).toStringAsFixed(1)}",
+                              "${AppLocalizations.of(context)!.currencySymbol}${(expenseController.budgetData?.summary.spent ?? 0).round()}",
                         ),
                         SizedBox(width: 16),
                         ExpenseDetailBox(
                           title: AppLocalizations.of(context)!.remainingText,
                           value:
-                              "\$${(expenseController.budgetData?.summary.remaining ?? 0.0).toStringAsFixed(1)}",
+                              "${AppLocalizations.of(context)!.currencySymbol}${(expenseController.budgetData?.summary.remaining ?? 0).round()}",
                         ),
                       ],
                     ),
@@ -116,7 +116,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                 ),
                               ),
                               Text(
-                                "${(expenseController.budgetData?.summary.percentage ?? 0.0).toStringAsFixed(1)}%",
+                                "${(expenseController.budgetData?.summary.percentage ?? 0).round()}%",
                                 style: TextStyle(
                                   color: Appcolors.blackColor,
                                   fontSize: bodyfontSize,
@@ -164,7 +164,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "\$${(expenseController.budgetData?.summary.spent ?? 0.0).toStringAsFixed(1)} ${AppLocalizations.of(context)!.spentLowerText} \$${(expenseController.budgetData?.summary.planned ?? 0.0).toStringAsFixed(1)} ${AppLocalizations.of(context)!.plannedLowerText}",
+                              "${AppLocalizations.of(context)!.currencySymbol}${(expenseController.budgetData?.summary.spent ?? 0).round()} ${AppLocalizations.of(context)!.spentLowerText} ${AppLocalizations.of(context)!.currencySymbol}${(expenseController.budgetData?.summary.planned ?? 0).round()} ${AppLocalizations.of(context)!.plannedLowerText}",
                               style: TextStyle(
                                 color: Appcolors.blackColor,
                                 fontSize: bodySmallfontSize,
@@ -268,9 +268,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                                   expense,
                                                 );
                                             showCustomBottomSheet(
-                                              minChildSize: 0.2,
+                                              minChildSize: 0.9,
                                               context: context,
-                                              initialChildSize: 0.8,
+                                              initialChildSize: 0.9,
                                               maxChildSize: 0.9,
                                               child: AddNewExpenseBottomSheet(
                                                 expense: expense,
@@ -386,7 +386,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                                     ),
                                                     SizedBox(width: 5),
                                                     Text(
-                                                      "\$${(expense.budget.spent ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.useText}",
+                                                      "${AppLocalizations.of(context)!.currencySymbol}${(expense.budget.spent ?? 0).round()} ${AppLocalizations.of(context)!.useText}",
                                                       style: TextStyle(
                                                         color: Appcolors
                                                             .blackColor,
@@ -405,7 +405,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                      "${AppLocalizations.of(context)!.budget} : \$${(expense.budget.total ?? 0).toStringAsFixed(2)}",
+                                                      "${AppLocalizations.of(context)!.budget} : ${AppLocalizations.of(context)!.currencySymbol}${(expense.budget.total ?? 0).round()}",
                                                       style: TextStyle(
                                                         color: Appcolors
                                                             .blackColor,
@@ -416,7 +416,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                                     ),
 
                                                     Text(
-                                                      "\$${(expense.budget.remaining ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.leftText}",
+                                                      "${AppLocalizations.of(context)!.currencySymbol}${(expense.budget.remaining ?? 0).round()} ${AppLocalizations.of(context)!.leftText}",
                                                       style: TextStyle(
                                                         color: Appcolors
                                                             .blackColor,
@@ -426,7 +426,7 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "${expense.budget.percentage}%",
+                                                      "${(expense.budget.percentage ?? 0).round()}%",
                                                       style: TextStyle(
                                                         color: Appcolors
                                                             .blackColor,
@@ -515,9 +515,9 @@ class _ExpenseScreenState extends State<ExpenseScreen> {
                     onPressed: () {
                       expenseController.clearAllFields();
                       showCustomBottomSheet(
-                        minChildSize: 0.2,
+                        minChildSize: 0.9,
                         context: context,
-                        initialChildSize: 0.8,
+                        initialChildSize: 0.9,
                         maxChildSize: 0.9,
                         child: AddNewExpenseBottomSheet(isUpdate: false),
                       );

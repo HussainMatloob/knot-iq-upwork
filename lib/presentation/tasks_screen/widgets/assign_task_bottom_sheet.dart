@@ -55,8 +55,21 @@ class _AssignTaskBootomSheetState extends State<AssignTaskBootomSheet> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    /// CENTER - TITLE (Flexible + Ellipsis)
+                    Text(
+                      AppLocalizations.of(context)!.assignTask,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Appcolors.blackColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
                     /// LEFT - Cancel
                     InkWell(
                       onTap: () => Navigator.pop(context),
@@ -66,41 +79,6 @@ class _AssignTaskBootomSheetState extends State<AssignTaskBootomSheet> {
                           AppLocalizations.of(context)!.cancelText,
                           style: const TextStyle(
                             color: Appcolors.blackColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    /// CENTER - TITLE (Flexible + Ellipsis)
-                    Expanded(
-                      child: Text(
-                        AppLocalizations.of(context)!.assignTask,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Appcolors.blackColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-
-                    /// RIGHT - Save / Update / Loader
-                    InkWell(
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          taskController.assignTask(context);
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          AppLocalizations.of(context)!.saveText,
-                          style: const TextStyle(
-                            color: Appcolors.primaryColor,
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -217,6 +195,36 @@ class _AssignTaskBootomSheetState extends State<AssignTaskBootomSheet> {
                 ),
 
                 const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          taskController.assignTask(context);
+                        },
+                        child: Container(
+                          height: 40,
+                          padding: EdgeInsets.all(8),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Appcolors.primary2Color,
+                          ),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.saveText,
+                              style: const TextStyle(
+                                color: Appcolors.whiteColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

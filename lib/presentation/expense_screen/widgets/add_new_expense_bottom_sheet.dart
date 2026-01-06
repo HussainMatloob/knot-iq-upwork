@@ -56,8 +56,23 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      /// CENTER - TITLE (Flexible + Ellipsis)
+                      Text(
+                        widget.isUpdate
+                            ? AppLocalizations.of(context)!.updateExpense
+                            : AppLocalizations.of(context)!.newExpense,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Appcolors.blackColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
                       /// LEFT - Cancel
                       InkWell(
                         onTap: () => Navigator.pop(context),
@@ -71,68 +86,6 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
-                      ),
-
-                      /// CENTER - TITLE (Flexible + Ellipsis)
-                      Expanded(
-                        child: Text(
-                          widget.isUpdate
-                              ? AppLocalizations.of(context)!.updateExpense
-                              : AppLocalizations.of(context)!.newExpense,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Appcolors.blackColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-
-                      /// RIGHT - Save / Update / Loader
-                      InkWell(
-                        onTap: () {
-                          if (formKey.currentState!.validate()) {
-                            if (widget.isUpdate) {
-                              expenseController.updateBudgetExpense(
-                                context,
-                                widget.expense!,
-                              );
-                            } else {
-                              expenseController.addBudgetExpense(context);
-                            }
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child:
-                              expenseController.isBudgetAdd ||
-                                  expenseController.isBudgetUpdate
-                              ? Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Center(
-                                    child: SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Appcolors.primary2Color,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Text(
-                                  widget.isUpdate
-                                      ? AppLocalizations.of(context)!.updateText
-                                      : AppLocalizations.of(context)!.saveText,
-                                  style: const TextStyle(
-                                    color: Appcolors.primaryColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
                         ),
                       ),
                     ],
@@ -151,13 +104,11 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                   CustomTextFormField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                        RegExp(r'^\d+\.?\d{0,100}$'),
-                      ),
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d+$')),
                     ],
                     validateFunction: (value) =>
                         expenseController.amountValidate(value, context),
-                    hint: "\$0.0",
+                    hint: "${AppLocalizations.of(context)!.currencySymbol}${0}",
                     controller: expenseController.amountController,
                   ),
 
@@ -176,7 +127,7 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                           false,
                         );
                         showCustomBottomSheet(
-                          minChildSize: 0.2,
+                          minChildSize: 0.8,
                           context: context,
                           initialChildSize: 0.8,
                           maxChildSize: 0.9,
@@ -265,7 +216,7 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                                               .budgetInstallments[index],
                                         );
                                     showCustomBottomSheet(
-                                      minChildSize: 0.2,
+                                      minChildSize: 0.8,
                                       context: context,
                                       initialChildSize: 0.8,
                                       maxChildSize: 0.9,
@@ -288,8 +239,7 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Container(
-                                              width: 245,
+                                            Flexible(
                                               child: Text(
                                                 "${expenseController.budgetInstallments[index]["note"]}",
                                                 style: TextStyle(
@@ -300,10 +250,11 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                                                 ),
                                               ),
                                             ),
-                                            Container(
-                                              width: 60,
+                                            SizedBox(width: 20),
+
+                                            Flexible(
                                               child: Text(
-                                                "\$${double.parse(expenseController.budgetInstallments[index]["amount"].toString()).toStringAsFixed(1)}",
+                                                "${AppLocalizations.of(context)!.currencySymbol}${expenseController.budgetInstallments[index]["amount"].toString()}",
                                                 style: TextStyle(
                                                   color:
                                                       Appcolors.darkGreyColor,
@@ -316,6 +267,7 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                                             ),
                                           ],
                                         ),
+
                                         const SizedBox(height: 12),
                                         Row(
                                           mainAxisAlignment:
@@ -369,7 +321,7 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                   CustomTextFormField(
                     validateFunction: (value) =>
                         expenseController.expenseTitleValidate(value, context),
-                    hint: AppLocalizations.of(context)!.expenseHint,
+                    hint: AppLocalizations.of(context)!.hintTextTitle,
                     controller: expenseController.expenseTitleController,
                   ),
 
@@ -398,7 +350,7 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
 
                   const SizedBox(height: 20),
                   Text(
-                    AppLocalizations.of(context)!.writeNoteText,
+                    AppLocalizations.of(context)!.descriptionText,
                     style: TextStyle(
                       color: Appcolors.darkGreyColor,
                       fontSize: bodyfontSize,
@@ -408,59 +360,125 @@ class _AddNewExpenseBottomSheetState extends State<AddNewExpenseBottomSheet> {
                   SizedBox(height: 6),
                   CustomTextFormField(
                     multiLine: 4,
-                    validateFunction: (value) =>
-                        expenseController.noteValidate(value, context),
-                    hint: AppLocalizations.of(context)!.noteHint,
+                    // validateFunction: (value) =>
+                    //     expenseController.noteValidate(value, context),
+                    hint: AppLocalizations.of(context)!.hintTextDescription,
                     controller: expenseController.noteController,
                   ),
 
-                  SizedBox(height: widget.isUpdate ? 20 : 0),
+                  SizedBox(height: 30),
 
-                  widget.isUpdate
-                      ? expenseController.isExpenseDelete
-                            ? Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Appcolors.redColor,
-                                  ),
-                                ),
-                              )
-                            : GestureDetector(
+                  expenseController.isBudgetAdd ||
+                          expenseController.isBudgetUpdate ||
+                          expenseController.isExpenseDelete
+                      ? Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: expenseController.isExpenseDelete
+                                  ? Appcolors.redColor
+                                  : Appcolors.primary2Color,
+                            ),
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            widget.isUpdate
+                                ? Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        customDeleteDialog(
+                                          context,
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            expenseController.deleteExpense(
+                                              context,
+                                              widget.expense!,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        padding: EdgeInsets.all(8),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          color: Appcolors.redColor.withAlpha(
+                                            20,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.deleteText,
+                                            style: TextStyle(
+                                              color: Appcolors.redColor,
+                                              fontSize: headdingfontSize,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            Visibility(
+                              visible: widget.isUpdate,
+                              child: SizedBox(width: 30),
+                            ),
+
+                            /// RIGHT - Save / Update / Loader
+                            Expanded(
+                              child: InkWell(
                                 onTap: () {
-                                  customDeleteDialog(
-                                    context,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      expenseController.deleteExpense(
+                                  if (formKey.currentState!.validate()) {
+                                    if (widget.isUpdate) {
+                                      expenseController.updateBudgetExpense(
                                         context,
                                         widget.expense!,
                                       );
-                                    },
-                                  );
+                                    } else {
+                                      expenseController.addBudgetExpense(
+                                        context,
+                                      );
+                                    }
+                                  }
                                 },
                                 child: Container(
-                                  height: 50,
-                                  padding: EdgeInsets.all(10),
+                                  height: 40,
+                                  padding: EdgeInsets.all(8),
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Appcolors.redColor.withAlpha(20),
+                                    color: Appcolors.primary2Color,
                                   ),
                                   child: Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.deleteText,
-                                      style: TextStyle(
-                                        color: Appcolors.redColor,
-                                        fontSize: headdingfontSize,
-                                        fontWeight: FontWeight.w400,
+                                      widget.isUpdate
+                                          ? AppLocalizations.of(
+                                              context,
+                                            )!.updateText
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.saveText,
+                                      style: const TextStyle(
+                                        color: Appcolors.whiteColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
                                 ),
-                              )
-                      : const SizedBox.shrink(),
+                              ),
+                            ),
+                          ],
+                        ),
 
                   const SizedBox(height: 20),
                 ],

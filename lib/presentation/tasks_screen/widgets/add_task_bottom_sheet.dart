@@ -47,8 +47,23 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          /// CENTER - TITLE (Flexible + Ellipsis)
+                          Text(
+                            widget.isEditing
+                                ? AppLocalizations.of(context)!.updateTask
+                                : AppLocalizations.of(context)!.addTask,
+                            maxLines: 1,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Appcolors.blackColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
                           /// LEFT - Cancel
                           InkWell(
                             onTap: () => Navigator.pop(context),
@@ -62,70 +77,6 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                            ),
-                          ),
-
-                          /// CENTER - TITLE (Flexible + Ellipsis)
-                          Expanded(
-                            child: Text(
-                              widget.isEditing
-                                  ? AppLocalizations.of(context)!.updateTask
-                                  : AppLocalizations.of(context)!.addTask,
-                              maxLines: 1,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                color: Appcolors.blackColor,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-
-                          /// RIGHT - Save / Update / Loader
-                          InkWell(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                if (taskController.isEditing) {
-                                  taskController.updateTask(
-                                    context,
-                                    widget.taskData!,
-                                  );
-                                } else {
-                                  taskController.addTask(context);
-                                }
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: taskController.isTaskAdd
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Center(
-                                        child: SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: Appcolors.primary2Color,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Text(
-                                      widget.isEditing
-                                          ? AppLocalizations.of(
-                                              context,
-                                            )!.updateText
-                                          : AppLocalizations.of(
-                                              context,
-                                            )!.saveText,
-                                      style: const TextStyle(
-                                        color: Appcolors.primaryColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
                             ),
                           ),
                         ],
@@ -144,7 +95,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       CustomTextFormField(
                         validateFunction: (value) =>
                             taskController.taskTitleValidate(value, context),
-                        hint: AppLocalizations.of(context)!.taskTitleHint,
+                        hint: AppLocalizations.of(context)!.hintTextTitle,
                         controller: taskController.taskTitleController,
                       ),
 
@@ -162,7 +113,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         multiLine: 4,
                         validateFunction: (value) => taskController
                             .taskDiscriptionValidate(value, context),
-                        hint: AppLocalizations.of(context)!.taskDesHint,
+                        hint: AppLocalizations.of(context)!.hintTextDescription,
                         controller: taskController.taskDescriptionController,
                       ),
 
@@ -499,7 +450,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         onTap: () {
                           taskController.clearFields(isAddTask: true);
                           showCustomBottomSheet(
-                            minChildSize: 0.2,
+                            minChildSize: 0.65,
                             context: context,
                             initialChildSize: 0.65,
                             maxChildSize: 0.7,
@@ -531,60 +482,123 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 },
               ),
               const SizedBox(height: 20),
+
               GetBuilder<TaskController>(
-                builder: (taskController) {
-                  return taskController.isEditing
-                      ? taskController.isTaskDelete
-                            ? Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Appcolors.redColor,
-                                  ),
-                                ),
-                              )
-                            : GestureDetector(
+                builder: (taskcontroller) {
+                  return taskController.isTaskAdd || taskController.isTaskDelete
+                      ? Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: taskController.isTaskDelete
+                                  ? Appcolors.redColor
+                                  : Appcolors.primary2Color,
+                            ),
+                          ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            widget.isEditing
+                                ? Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        customDeleteDialog(
+                                          context,
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            taskController.deleteTask(
+                                              context,
+                                              widget.taskData!,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        padding: EdgeInsets.all(8),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          color: Appcolors.redColor.withAlpha(
+                                            20,
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            AppLocalizations.of(
+                                              context,
+                                            )!.deleteText,
+                                            style: TextStyle(
+                                              color: Appcolors.redColor,
+                                              fontSize: headdingfontSize,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            Visibility(
+                              visible: widget.isEditing,
+                              child: SizedBox(width: 30),
+                            ),
+
+                            /// RIGHT - Save / Update / Loader
+                            Expanded(
+                              child: InkWell(
                                 onTap: () {
-                                  customDeleteDialog(
-                                    context,
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      taskController.deleteTask(
+                                  if (formKey.currentState!.validate()) {
+                                    if (taskController.isEditing) {
+                                      taskController.updateTask(
                                         context,
                                         widget.taskData!,
                                       );
-                                    },
-                                  );
+                                    } else {
+                                      taskController.addTask(context);
+                                    }
+                                  }
                                 },
                                 child: Container(
-                                  height: 50,
-                                  padding: EdgeInsets.all(10),
+                                  height: 40,
+                                  padding: EdgeInsets.all(8),
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(12),
-                                    color: Appcolors.redColor.withAlpha(20),
+                                    color: Appcolors.primary2Color,
                                   ),
                                   child: Center(
                                     child: Text(
-                                      AppLocalizations.of(context)!.deleteText,
-                                      style: TextStyle(
-                                        color: Appcolors.redColor,
-                                        fontSize: headdingfontSize,
-                                        fontWeight: FontWeight.w400,
+                                      widget.isEditing
+                                          ? AppLocalizations.of(
+                                              context,
+                                            )!.updateText
+                                          : AppLocalizations.of(
+                                              context,
+                                            )!.saveText,
+                                      style: const TextStyle(
+                                        color: Appcolors.whiteColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ),
                                 ),
-                              )
-                      : const SizedBox.shrink();
+                              ),
+                            ),
+                          ],
+                        );
                 },
               ),
+              SizedBox(height: 10),
             ],
           ),
         ),
       ),
     );
-    ;
   }
 }

@@ -465,6 +465,7 @@ class HomeController extends GetxController {
               backGroundColor: Appcolors.primaryColor,
             );
             getYourData(context, isLoading: false);
+            Navigator.pop(context);
           } else {
             FlushMessages.commonToast(
               "${response.data['message']}",
@@ -498,6 +499,7 @@ class HomeController extends GetxController {
             backGroundColor: Appcolors.primaryColor,
           );
           getYourData(context, isLoading: false);
+          Navigator.pop(context);
         } else {
           FlushMessages.commonToast(
             "${response.data['message']}",

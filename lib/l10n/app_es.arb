@@ -195,7 +195,6 @@
   "expenseTitleValidate": "Por favor ingrese el título del gasto",
   "paidText": "Pagado",
   "paymentDate": "Fecha de pago",
-  "installmentNoteHintText": "Primer pago",
   "addPaymentText": "Pago agregado",
   "deletePaymentText": "Eliminar pago",
 
@@ -286,6 +285,11 @@
   "refreshText": "Actualizar",
   "noProfileDataText": "No hay datos disponibles aún",
   "emptyProfileScreenText": "Toca actualizar para cargar los datos más recientes del perfil",
-  "profileUpdateSuccess": "Perfil actualizado con éxito"
-
+  "profileUpdateSuccess": "Perfil actualizado con éxito",
+  "hintTextTitle": "Ingrese el título",
+  "hintTextDescription": "Ingrese la descripción",
+  "dateHint": "Seleccionar fecha",
+  "descriptionText": "Descripción",
+  "helloText": "Hola",
+  "currencySymbol": "€"
 }

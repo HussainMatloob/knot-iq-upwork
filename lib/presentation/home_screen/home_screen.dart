@@ -188,15 +188,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .dashboardData
                                                   ?.vendors
                                                   .current ??
-                                              0.0)
-                                          .toStringAsFixed(1),
+                                              0)
+                                          .round()
+                                          .toString(),
                                   totalValue:
                                       (homeController
                                                   .dashboardData
                                                   ?.vendors
                                                   .target ??
                                               0)
-                                          .toStringAsFixed(1),
+                                          .round()
+                                          .toString(),
                                 ),
                               ),
                               SizedBox(width: 20),
@@ -212,15 +214,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .dashboardData
                                                   ?.budget
                                                   .spent ??
-                                              0.0)
-                                          .toStringAsFixed(1),
+                                              0)
+                                          .round()
+                                          .toString(),
                                   totalValue:
                                       (homeController
                                                   .dashboardData
                                                   ?.budget
                                                   .planned ??
-                                              0.0)
-                                          .toStringAsFixed(1),
+                                              0)
+                                          .round()
+                                          .toString(),
                                 ),
                               ),
                             ],
@@ -238,9 +242,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context,
                                   )!.tasksDone,
                                   currentValue:
-                                      "${homeController.dashboardData?.tasks.completed ?? 0}",
+                                      "${(homeController.dashboardData?.tasks.completed ?? 0).round()}",
                                   totalValue:
-                                      "${homeController.dashboardData?.tasks.total ?? 0}",
+                                      "${(homeController.dashboardData?.tasks.total ?? 0).round()}",
                                 ),
                               ),
                               SizedBox(width: 20),
@@ -255,14 +259,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ?.guests
                                                   .attending ??
                                               0)
-                                          .toStringAsFixed(1),
+                                          .round()
+                                          .toString(),
                                   totalValue:
                                       (homeController
                                                   .dashboardData
                                                   ?.guests
                                                   .total ??
                                               0)
-                                          .toStringAsFixed(1),
+                                          .round()
+                                          .toString(),
                                 ),
                               ),
                             ],

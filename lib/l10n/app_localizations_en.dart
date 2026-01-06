@@ -510,9 +510,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentDate => 'Payment date';
 
   @override
-  String get installmentNoteHintText => '1st payment';
-
-  @override
   String get addPaymentText => 'Added Payment';
 
   @override
@@ -745,4 +742,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileUpdateSuccess => 'Profile update successfully';
+
+  @override
+  String get hintTextTitle => 'Enter title';
+
+  @override
+  String get hintTextDescription => 'Enter description';
+
+  @override
+  String get dateHint => 'Select date';
+
+  @override
+  String get descriptionText => 'Description';
+
+  @override
+  String get helloText => 'Hello';
+
+  @override
+  String get currencySymbol => '\$';
 }

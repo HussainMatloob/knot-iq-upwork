@@ -16,6 +16,17 @@ class DateHelper {
     return DateFormat("dd MMM, hh:mm a").format(dateTime);
   }
 
+  //   static String formatToiOSTime(String? dateTimeString, BuildContext context) {
+  //   if (dateTimeString == null || dateTimeString.isEmpty) return "";
+
+  //   final dateTime = DateTime.parse(dateTimeString).toLocal();
+
+  //   // Uses system (iOS) 12h / 24h automatically
+  //   return DateFormat.jm(
+  //     Localizations.localeOf(context).toString(),
+  //   ).format(dateTime);
+  // }
+
   static String formatDashDate(String? apiDate) {
     try {
       final date = (apiDate == null || apiDate.isEmpty)
